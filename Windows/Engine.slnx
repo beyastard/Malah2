@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="../Engine/Angelica/Angelica.vcxproj" Id="d1dd9d58-1401-4fc3-b033-ffb72acd2eac" />
+</Solution>
