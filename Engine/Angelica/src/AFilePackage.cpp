@@ -279,7 +279,7 @@ bool AFilePackage::ReplaceFile(std::wstring_view fileName, std::span<const std::
     return true;
 }
 
-bool AFilePackage::ReadFile(std::wstring_view fileName, std::span<std::byte> buffer, std::uint32_t offset, std::uint32_t& bytesRead)
+bool AFilePackage::ReadFile(std::wstring_view fileName, std::span<std::byte> buffer, std::size_t offset, std::size_t& bytesRead)
 {
     AFPCK_FILEENTRY entry;
     if (!GetFileEntry(fileName, entry))
@@ -291,7 +291,7 @@ bool AFilePackage::ReadFile(std::wstring_view fileName, std::span<std::byte> buf
     return ReadFile(entry, buffer, offset, bytesRead);
 }
 
-bool AFilePackage::ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> buffer, std::uint32_t offset, std::uint32_t& bytesRead)
+bool AFilePackage::ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> buffer, std::size_t offset, std::size_t& bytesRead)
 {
     if (offset > entry.dwLength)
     {
@@ -299,7 +299,7 @@ bool AFilePackage::ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> b
         return false;
     }
 
-    std::uint32_t bytesToRead = entry.dwLength - offset;
+    std::size_t bytesToRead = entry.dwLength - offset;
     if (buffer.size() < bytesToRead)
     {
         AFERRLOG(L"AFilePackage::ReadFile(), Buffer too small: {} < {}", buffer.size(), bytesToRead);
@@ -321,7 +321,7 @@ bool AFilePackage::ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> b
         if (m_packageFile.gcount() != static_cast<std::streamsize>(entry.dwCompressedLength))
             return false;
 
-        uLongf destLen = bytesToRead;
+        uLongf destLen = static_cast<uLongf>(bytesToRead);
         int result = uncompress(
             reinterpret_cast<Bytef*>(buffer.data()),
             &destLen,
@@ -335,12 +335,12 @@ bool AFilePackage::ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> b
             return false;
         }
 
-        bytesRead = static_cast<std::uint32_t>(destLen);
+        bytesRead = static_cast<std::size_t>(destLen);
     }
     else
     {
         m_packageFile.read(reinterpret_cast<char*>(buffer.data()), bytesToRead);
-        bytesRead = static_cast<std::uint32_t>(m_packageFile.gcount());
+        bytesRead = static_cast<std::size_t>(m_packageFile.gcount());
     }
 
     return true;

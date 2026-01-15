@@ -48,8 +48,8 @@ public:
 #pragma pop_macro("ReplaceFile")
 #endif
 
-	bool ReadFile(std::wstring_view fileName, std::span<std::byte> buffer, std::uint32_t offset, std::uint32_t& bytesRead);
-	bool ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> buffer, std::uint32_t offset, std::uint32_t& bytesRead);
+	bool ReadFile(std::wstring_view fileName, std::span<std::byte> buffer, std::size_t offset, std::size_t& bytesRead);
+	bool ReadFile(const AFPCK_FILEENTRY& entry, std::span<std::byte> buffer, std::size_t offset, std::size_t& bytesRead);
 
 	bool GetFileEntry(std::wstring_view fileName, AFPCK_FILEENTRY& outEntry, int* outIndex = nullptr) const;
 	bool GetFileEntryByIndex(int index, AFPCK_FILEENTRY& outEntry) const;

@@ -19,6 +19,9 @@
 //   std::wstring wMsg = AString_CP936ToUnicode(gbkMsg);
 //   log.Init(L"test.log", wMsg);
 
+// Log level enumeration
+enum class LogLevel { Info = 0, Error = 1 };
+
 class ALog
 {
 public:
