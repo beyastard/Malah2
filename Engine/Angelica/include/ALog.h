@@ -2,6 +2,7 @@
 #define _ALOG_H_
 
 #include <cstdarg>
+#include <string>
 
 // USAGE EXAMPLES:
 //

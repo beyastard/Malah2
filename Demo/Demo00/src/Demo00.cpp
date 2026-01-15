@@ -13,19 +13,19 @@ static void _LogOutput(const wchar_t* szMsg)
 }
 
 // WinMain
-int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char* lpCmdLine, int nCmdShow)
+int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, wchar_t* lpCmdLine, int nCmdShow)
 {
 	// Register window class
 	if (!RegisterWndClass(hInstance))
 	{
-		l_Log.Log(L"WinMain, Failed to register window class!");
+		l_Log.Log(L"wWinMain, Failed to register window class!");
 		return -1;
 	}
 
 	// Create main window
 	if (!CreateMainWnd(hInstance, nCmdShow))
 	{
-		l_Log.Log(L"WinMain, Failed to create main window!");
+		l_Log.Log(L"wWinMain, Failed to create main window!");
 		return -1;
 	}
 
@@ -85,11 +85,7 @@ bool CreateMainWnd(HINSTANCE hInstance, int nCmdShow)
 		dwStyles |= WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU | WS_THICKFRAME;
 
 	DWORD dwExStyle = 0;
-#ifdef UNICODE
-	const wchar_t* l_szWndName = L"Aurora v0.1 Demo 00 Test Window";
-#else
-	const char* l_szWndName = "Aurora v0.1 Demo 00 Test Window";
-#endif
+	const wchar_t* l_szWndName = L"Angelica v0.1 Demo 00 Test Window";
 
 	HWND hWnd = CreateWindowEx(dwExStyle, l_szClassName, l_szWndName, dwStyles, 0, 0,
 		l_iRenderWidth, l_iRenderHeight, nullptr, nullptr, hInstance, nullptr);
